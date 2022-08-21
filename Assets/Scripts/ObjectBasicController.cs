@@ -1,10 +1,15 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class ObjectBasicController : MonoBehaviour
 {
     public Material InactiveMaterial;
     public Material GazedAtMaterial;
+
+    //Logger script was made for ease the development time
+    public GameObject UIText;
+    UILogger loggerScript;
 
     // The objects are about 1 meter in radius, so the min/max target distance are
     // set so that the objects are always within the room (which is about 5 meters
@@ -22,6 +27,8 @@ public class ObjectBasicController : MonoBehaviour
         _startingPosition = transform.parent.localPosition;
         _myRenderer = GetComponent<Renderer>();
         SetMaterial(false);
+
+        loggerScript = UIText.GetComponent<UILogger>();
     }
 
     /// Sets this instance's material according to gazedAt status.
@@ -38,22 +45,18 @@ public class ObjectBasicController : MonoBehaviour
     public void OnPointerEnter()
     {
         SetMaterial(true);
+        loggerScript.SetMessage("OnPointerEnter:" + _myRenderer.name);
     }
 
     /// This method is called by the Main Camera when it stops gazing at this GameObject.
     public void OnPointerExit()
     {
         SetMaterial(false);
+        loggerScript.SetMessage("OnPointerExit");
     }
 
     public void OnPointerClick()
     {
-        Debug.Log("Hello: " + _myRenderer.name);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        loggerScript.SetMessage("OnPointerClick: ");
     }
 }
