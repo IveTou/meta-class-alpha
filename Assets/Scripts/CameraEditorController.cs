@@ -22,7 +22,7 @@ public class CameraEditorController : MonoBehaviour
     void Update()
     {
         mouseX += Input.GetAxis("Mouse X") * sensitivity;
-        mouseY += Input.GetAxis("Mouse Y") * sensitivity;
+        mouseY -= Input.GetAxis("Mouse Y") * sensitivity;
         transform.eulerAngles = new Vector3(mouseY, mouseX, 0);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraPointerController : MonoBehaviour
 {
@@ -10,13 +11,16 @@ public class CameraPointerController : MonoBehaviour
     private float onPointerEnterCounter = 0f;
     public float onPointerClickTime = 3f;
 
+    public GameObject loader;
+    public Slider slider;
+
     public void Update()
     {
         // Casts ray towards camera's forward direction, to detect if a GameObject is being gazed
         // at.
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, _maxDistance))
-        {
+        {            
             // GameObject detected in front of the camera.
             if (_gazedAtObject != hit.transform.gameObject)
             {
@@ -25,7 +29,12 @@ public class CameraPointerController : MonoBehaviour
                 _gazedAtObject = hit.transform.gameObject;
                 _gazedAtObject.SendMessage("OnPointerEnter");
 
-                hasPointerEntered = true;
+                if( _gazedAtObject.tag != "Environment")
+                {
+                    hasPointerEntered = true;
+                } else {
+                    hasPointerEntered = false;
+                }
             }
         }
         else
@@ -41,12 +50,21 @@ public class CameraPointerController : MonoBehaviour
         {
             onPointerEnterCounter += Time.deltaTime;
 
+            loader.SetActive(true);
+            slider.value = onPointerEnterCounter / onPointerClickTime;
+
             if (onPointerEnterCounter >= onPointerClickTime)
             {
                 _gazedAtObject?.SendMessage("OnPointerClick");
+
+                loader.SetActive(false);
+                slider.value = 0f;
             }
         } else {
             onPointerEnterCounter = 0;
+
+            loader.SetActive(false);
+            slider.value = 0f;
         }
     }
 
