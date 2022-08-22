@@ -6,6 +6,10 @@ public class CameraPointerController : MonoBehaviour
     private const float _maxDistance = 10;
     private GameObject _gazedAtObject = null;
 
+    private bool hasPointerEntered = false;
+    private float onPointerEnterCounter = 0f;
+    public float onPointerClickTime = 3f;
+
     public void Update()
     {
         // Casts ray towards camera's forward direction, to detect if a GameObject is being gazed
@@ -20,6 +24,8 @@ public class CameraPointerController : MonoBehaviour
                 _gazedAtObject?.SendMessage("OnPointerExit");
                 _gazedAtObject = hit.transform.gameObject;
                 _gazedAtObject.SendMessage("OnPointerEnter");
+
+                hasPointerEntered = true;
             }
         }
         else
@@ -27,12 +33,25 @@ public class CameraPointerController : MonoBehaviour
             // No GameObject detected in front of the camera.
             _gazedAtObject?.SendMessage("OnPointerExit");
             _gazedAtObject = null;
+
+            hasPointerEntered = false;
         }
 
-        // Checks for screen touches.
-        if (Google.XR.Cardboard.Api.IsTriggerPressed)
+        if (hasPointerEntered)
         {
-            _gazedAtObject?.SendMessage("OnPointerClick");
+            onPointerEnterCounter += Time.deltaTime;
+
+            if (onPointerEnterCounter >= onPointerClickTime)
+            {
+                _gazedAtObject?.SendMessage("OnPointerClick");
+            }
+        } else {
+            onPointerEnterCounter = 0;
         }
+    }
+
+    public float getOnPointerEnterCounter()
+    {
+        return onPointerEnterCounter;
     }
 }

@@ -57,6 +57,6 @@ public class ObjectBasicController : MonoBehaviour
 
     public void OnPointerClick()
     {
-        loggerScript.SetMessage("OnPointerClick: ");
+        loggerScript.SetMessage("OnPointerClick");
     }
 }
