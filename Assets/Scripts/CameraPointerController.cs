@@ -72,4 +72,12 @@ public class CameraPointerController : MonoBehaviour
     {
         return onPointerEnterCounter;
     }
+
+    public void handlePointerClick(Renderer target)
+    {
+        if (target.tag == "Teleportable") {
+            Debug.Log("handlePointerClick: " + target.tag);
+            transform.position = target.transform.position;
+        }
+    }
 }

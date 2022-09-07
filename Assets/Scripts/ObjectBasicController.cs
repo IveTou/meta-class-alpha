@@ -9,7 +9,9 @@ public class ObjectBasicController : MonoBehaviour
 
     //Logger script was made for ease the development time
     public GameObject UIText;
+    public GameObject CameraController;
     UILogger loggerScript;
+    CameraPointerController cameraPointerController;
 
     // The objects are about 1 meter in radius, so the min/max target distance are
     // set so that the objects are always within the room (which is about 5 meters
@@ -29,6 +31,7 @@ public class ObjectBasicController : MonoBehaviour
         SetMaterial(false);
 
         loggerScript = UIText.GetComponent<UILogger>();
+        cameraPointerController = CameraController.GetComponent<CameraPointerController>();
     }
 
     /// Sets this instance's material according to gazedAt status.
@@ -58,5 +61,6 @@ public class ObjectBasicController : MonoBehaviour
     public void OnPointerClick()
     {
         loggerScript.SetMessage("OnPointerClick");
+        cameraPointerController.handlePointerClick(_myRenderer);
     }
 }
