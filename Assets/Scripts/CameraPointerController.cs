@@ -77,6 +77,7 @@ public class CameraPointerController : MonoBehaviour
     {
         if (target.tag == "Teleportable") {
             Debug.Log("handlePointerClick: " + target.tag);
+            transform.position = target.transform.position;
         }
     }
 }
