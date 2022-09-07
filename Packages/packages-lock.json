@@ -11,7 +11,7 @@
       "hash": "5c9645eb2674f442cfa9ab67fbe0970c0e6cf970"
     },
     "com.unity.collab-proxy": {
-      "version": "1.17.0",
+      "version": "1.17.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -128,6 +128,15 @@
         "com.unity.modules.xr": "1.0.0",
         "com.unity.xr.legacyinputhelpers": "2.1.7",
         "com.unity.subsystemregistration": "1.0.6"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.xr.mock-hmd": {
+      "version": "1.3.0-preview.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.xr.management": "4.0.1"
       },
       "url": "https://packages.unity.com"
     },
