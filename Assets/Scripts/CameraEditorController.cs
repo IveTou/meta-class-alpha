@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraEditorController : MonoBehaviour
 {
-    public float sensitivity = 2f;
+    public float sensitivity = 5f;
     private float mouseX = 0.0f, mouseY = 0.0f;
     void Start()
     {
