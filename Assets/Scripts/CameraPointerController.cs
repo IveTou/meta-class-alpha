@@ -11,8 +11,13 @@ public class CameraPointerController : MonoBehaviour
     private float onPointerEnterCounter = 0f;
     public float onPointerClickTime = 3f;
 
-    public GameObject loader;
-    public Slider slider;
+    public GameObject Loader;
+    private Slider SliderObject;
+
+    void Start()
+    {
+        SliderObject = Loader.GetComponentsInChildren<Slider>()[0];
+    }
 
     public void Update()
     {
@@ -50,21 +55,21 @@ public class CameraPointerController : MonoBehaviour
         {
             onPointerEnterCounter += Time.deltaTime;
 
-            loader.SetActive(true);
-            slider.value = onPointerEnterCounter / onPointerClickTime;
+            Loader.SetActive(true);
+            SliderObject.value = onPointerEnterCounter / onPointerClickTime;
 
             if (onPointerEnterCounter >= onPointerClickTime)
             {
                 _gazedAtObject?.SendMessage("OnPointerClick");
 
-                loader.SetActive(false);
-                slider.value = 0f;
+                Loader.SetActive(false);
+                SliderObject.value = 0f;
             }
         } else {
             onPointerEnterCounter = 0;
 
-            loader.SetActive(false);
-            slider.value = 0f;
+            Loader.SetActive(false);
+            SliderObject.value = 0f;
         }
     }
 

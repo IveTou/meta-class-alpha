@@ -8,8 +8,8 @@ public class ObjectBasicController : MonoBehaviour
     public Material GazedAtMaterial;
 
     //Logger script was made for ease the development time
-    public GameObject UIText;
-    public GameObject CameraController;
+    public GameObject Player;
+
     UILogger loggerScript;
     CameraPointerController cameraPointerController;
 
@@ -30,8 +30,11 @@ public class ObjectBasicController : MonoBehaviour
         _myRenderer = GetComponent<Renderer>();
         SetMaterial(false);
 
-        loggerScript = UIText.GetComponent<UILogger>();
-        cameraPointerController = CameraController.GetComponent<CameraPointerController>();
+        Camera cameraObject = Player.GetComponentsInChildren<Camera>()[0];
+        Canvas canvas = cameraObject.GetComponentsInChildren<Canvas>()[0];
+
+        cameraPointerController = cameraObject.GetComponent<CameraPointerController>();
+        loggerScript = canvas.GetComponent<UILogger>();
     }
 
     /// Sets this instance's material according to gazedAt status.
