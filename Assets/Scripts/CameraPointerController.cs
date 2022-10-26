@@ -16,7 +16,7 @@ public class CameraPointerController : MonoBehaviour
 
     void Start()
     {
-        SliderObject = Loader.GetComponentsInChildren<Slider>()[0];
+        SliderObject = Loader.GetComponentInChildren<Slider>();
     }
 
     public void Update()
