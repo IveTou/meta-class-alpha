@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 930735927599113449}
   - component: {fileID: 930735927599113454}
   - component: {fileID: 930735927599113450}
+  - component: {fileID: 1777292605}
   m_Layer: 0
   m_Name: Treasure
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930735927599113455}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2.4170003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -111,6 +112,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InactiveMaterial: {fileID: 2100000, guid: 3956c74b7c3f37a448caeace1e283336, type: 2}
-  GazedAtMaterial: {fileID: 2100000, guid: fb7fbd5c8ae464e488d56dd83e89f537, type: 2}
-  UIText: {fileID: 0}
-  CameraController: {fileID: 0}
+  GazedAtMaterial: {fileID: 2100000, guid: e4218d5466c01bd43b4f55ab2325b0d3, type: 2}
+--- !u!54 &1777292605
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930735927599113455}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
