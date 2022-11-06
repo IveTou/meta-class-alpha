@@ -28,7 +28,7 @@ public class ObjectBasicController : MonoBehaviour
         _myRenderer = GetComponent<Renderer>();
         SetMaterial(false);
 
-        GameObject Player = GameObject.Find("Interactive/Player");
+        GameObject Player = GameObject.Find("Player");
         Camera cameraObject = Player.GetComponentInChildren<Camera>();
         Canvas canvas = Player.GetComponentInChildren<Canvas>();
 
