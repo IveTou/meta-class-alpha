@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: -8345839603452919295}
   m_Layer: 0
   m_Name: Player
-  m_TagString: MainCamera
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -761,7 +761,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   target: {fileID: 2864296460921324518}
-  clientAuthority: 1
+  clientAuthority: 0
   syncPosition: 1
   syncRotation: 1
   syncScale: 0

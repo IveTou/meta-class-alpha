@@ -320,6 +320,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Treasure
       objectReference: {fileID: 0}
+    - target: {fileID: 4187633869316877451, guid: dc0aa0ca03f2bc8ce8e6bb372effbd45, type: 3}
+      propertyPath: sceneId
+      value: 3009294789
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc0aa0ca03f2bc8ce8e6bb372effbd45, type: 3}
 --- !u!1 &503613784
@@ -553,6 +557,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 205100932}
     m_Modifications:
+    - target: {fileID: 7388259496639815746, guid: 55d6078e9b483ca6797b41bf9ccbba46, type: 3}
+      propertyPath: sceneId
+      value: 1785549672
+      objectReference: {fileID: 0}
     - target: {fileID: 8344885229538678355, guid: 55d6078e9b483ca6797b41bf9ccbba46, type: 3}
       propertyPath: m_Name
       value: Chair
@@ -721,6 +729,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 205100932}
     m_Modifications:
+    - target: {fileID: 7388259496639815746, guid: 55d6078e9b483ca6797b41bf9ccbba46, type: 3}
+      propertyPath: sceneId
+      value: 2723938477
+      objectReference: {fileID: 0}
     - target: {fileID: 8344885229538678355, guid: 55d6078e9b483ca6797b41bf9ccbba46, type: 3}
       propertyPath: m_Name
       value: Chair

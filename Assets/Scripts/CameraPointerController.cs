@@ -15,7 +15,7 @@ public class CameraPointerController : NetworkBehaviour
     public GameObject Loader;
     private Slider SliderObject;
 
-    void Start()
+    public override void OnStartClient()
     {
         SliderObject = Loader.GetComponentInChildren<Slider>();
     }

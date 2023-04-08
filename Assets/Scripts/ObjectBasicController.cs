@@ -1,15 +1,16 @@
+using Mirror;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ObjectBasicController : MonoBehaviour
+public class ObjectBasicController : NetworkBehaviour
 {
     public Material InactiveMaterial;
     public Material GazedAtMaterial;
 
     //Logger script was made for ease the development time
-    UILogger loggerScript;
-    CameraPointerController cameraPointerController;
+    public UILogger loggerScript;
+    public CameraPointerController cameraPointerController;
 
     // The objects are about 1 meter in radius, so the min/max target distance are
     // set so that the objects are always within the room (which is about 5 meters
@@ -22,13 +23,13 @@ public class ObjectBasicController : MonoBehaviour
     private Renderer _myRenderer;
     private Vector3 _startingPosition;
 
-    void Start()
+    public override void OnStartClient()
     {
-        _startingPosition = transform.parent.localPosition;
+       _startingPosition = transform.parent.localPosition;
         _myRenderer = GetComponent<Renderer>();
         SetMaterial(false);
 
-        GameObject Player = GameObject.Find("Interactive/Player");
+        GameObject Player = GameObject.FindGameObjectsWithTag("Player")[0];
         Camera cameraObject = Player.GetComponentInChildren<Camera>();
         Canvas canvas = Player.GetComponentInChildren<Canvas>();
 
