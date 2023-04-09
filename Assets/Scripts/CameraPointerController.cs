@@ -14,6 +14,7 @@ public class CameraPointerController : NetworkBehaviour
 
     private UILogger loggerScript;
     private CameraPointerController cameraPointerController;
+    private Camera camera;
     private Slider SliderObject;
     public GameObject Loader;
 
@@ -24,67 +25,78 @@ public class CameraPointerController : NetworkBehaviour
 
         cameraPointerController = this.GetComponentInChildren<CameraPointerController>();
         loggerScript = this.GetComponentInChildren<UILogger>();
+
+        if (isLocalPlayer)
+        {
+            Camera camera = cameraPointerController.GetComponent<Camera>();
+            Canvas canvas = this.GetComponentInChildren<Canvas>();
+            camera.enabled = true;
+            canvas.enabled = true;
+            return;
+        }
+
     }
 
     public void Update()
     {
-        if (isLocalPlayer)
+        if (!isLocalPlayer)
         {
+            return;
+        }
             // Casts ray towards camera's forward direction, to detect if a GameObject is being gazed
             // at.
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, _maxDistance))
-            {            
-                // GameObject detected in front of the camera.
-                if (_gazedAtObject != hit.transform.gameObject)
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, _maxDistance))
+        {            
+            // GameObject detected in front of the camera.
+            if (_gazedAtObject != hit.transform.gameObject)
+            {
+                // New GameObject.
+                loggerScript.SetMessage("");
+                _gazedAtObject?.SendMessage("OnPointerExit");
+
+                _gazedAtObject = hit.transform.gameObject;
+                _gazedAtObject.SendMessage("OnPointerEnter");
+                loggerScript.SetMessage("OnPointerEnter:" + _gazedAtObject.name);
+
+                if( _gazedAtObject.tag != "Environment")
                 {
-                    // New GameObject.
-                    loggerScript.SetMessage("OnPointerExit");
-                    _gazedAtObject?.SendMessage("OnPointerExit");
-
-                    _gazedAtObject = hit.transform.gameObject;
-                    _gazedAtObject.SendMessage("OnPointerEnter");
-                    loggerScript.SetMessage("OnPointerEnter:" + _gazedAtObject.name);
-
-                    if( _gazedAtObject.tag != "Environment")
-                    {
-                        hasPointerEntered = true;
-                    } else {
-                        hasPointerEntered = false;
-                    }
+                    hasPointerEntered = true;
+                } else {
+                    hasPointerEntered = false;
                 }
             }
-            else
+        }
+        else
+        {
+            // No GameObject detected in front of the camera.
+            _gazedAtObject.SendMessage("OnPointerExit");
+            loggerScript.SetMessage("OnPointerExit");
+            _gazedAtObject = null;
+
+            hasPointerEntered = false;
+        }
+
+        if (hasPointerEntered)
+        {
+            onPointerEnterCounter += Time.deltaTime;
+
+            Loader.SetActive(true);
+            SliderObject.value = onPointerEnterCounter / onPointerClickTime;
+
+            if (onPointerEnterCounter >= onPointerClickTime)
             {
-                // No GameObject detected in front of the camera.
-                _gazedAtObject.SendMessage("OnPointerExit");
-                loggerScript.SetMessage("OnPointerExit");
-                _gazedAtObject = null;
-
-                hasPointerEntered = false;
-            }
-
-            if (hasPointerEntered)
-            {
-                onPointerEnterCounter += Time.deltaTime;
-
-                Loader.SetActive(true);
-                SliderObject.value = onPointerEnterCounter / onPointerClickTime;
-
-                if (onPointerEnterCounter >= onPointerClickTime)
-                {
-                    loggerScript.SetMessage("OnPointerClick");
-                    cameraPointerController.handlePointerClick(_gazedAtObject);
-
-                    Loader.SetActive(false);
-                    SliderObject.value = 0f;
-                }
-            } else {
-                onPointerEnterCounter = 0;
+                loggerScript.SetMessage("OnPointerClick");
+                cameraPointerController.handlePointerClick(_gazedAtObject);
 
                 Loader.SetActive(false);
                 SliderObject.value = 0f;
             }
+        } else {
+            onPointerEnterCounter = 0;
+
+            Loader.SetActive(false);
+            SliderObject.value = 0f;
         }
     }
 
