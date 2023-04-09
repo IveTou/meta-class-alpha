@@ -8,10 +8,6 @@ public class ObjectBasicController : NetworkBehaviour
     public Material InactiveMaterial;
     public Material GazedAtMaterial;
 
-    //Logger script was made for ease the development time
-    public UILogger loggerScript;
-    public CameraPointerController cameraPointerController;
-
     // The objects are about 1 meter in radius, so the min/max target distance are
     // set so that the objects are always within the room (which is about 5 meters
     // across).
@@ -28,14 +24,21 @@ public class ObjectBasicController : NetworkBehaviour
        _startingPosition = transform.parent.localPosition;
         _myRenderer = GetComponent<Renderer>();
         SetMaterial(false);
-
-        GameObject Player = GameObject.FindGameObjectsWithTag("Player")[0];
-        Camera cameraObject = Player.GetComponentInChildren<Camera>();
-        Canvas canvas = Player.GetComponentInChildren<Canvas>();
-
-        cameraPointerController = cameraObject.GetComponent<CameraPointerController>();
-        loggerScript = canvas.GetComponent<UILogger>();
     }
+
+    /*
+    GameObject FindLocalNetworkPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players)
+        {
+            if (player.GetComponent<NetworkIdentity>().isLocalPlayer){
+                return player;
+            }
+        }
+        return null;
+    }*/
+    
 
     /// Sets this instance's material according to gazedAt status.
     /// Value `true` if this object is being gazed at, `false` otherwise.
@@ -51,19 +54,11 @@ public class ObjectBasicController : NetworkBehaviour
     public void OnPointerEnter()
     {
         SetMaterial(true);
-        loggerScript.SetMessage("OnPointerEnter:" + _myRenderer.name);
     }
 
     /// This method is called by the Main Camera when it stops gazing at this GameObject.
     public void OnPointerExit()
     {
         SetMaterial(false);
-        loggerScript.SetMessage("OnPointerExit");
-    }
-
-    public void OnPointerClick()
-    {
-        loggerScript.SetMessage("OnPointerClick");
-        cameraPointerController.handlePointerClick(_myRenderer);
     }
 }

@@ -12,12 +12,18 @@ public class CameraPointerController : NetworkBehaviour
     private float onPointerEnterCounter = 0f;
     public float onPointerClickTime = 3f;
 
-    public GameObject Loader;
+    private UILogger loggerScript;
+    private CameraPointerController cameraPointerController;
     private Slider SliderObject;
+    public GameObject Loader;
 
     public override void OnStartClient()
     {
         SliderObject = Loader.GetComponentInChildren<Slider>();
+        transform.position = new Vector3(Random.Range(0f, 3f), 1, Random.Range(0f, 3f));
+
+        cameraPointerController = this.GetComponentInChildren<CameraPointerController>();
+        loggerScript = this.GetComponentInChildren<UILogger>();
     }
 
     public void Update()
@@ -33,9 +39,12 @@ public class CameraPointerController : NetworkBehaviour
                 if (_gazedAtObject != hit.transform.gameObject)
                 {
                     // New GameObject.
+                    loggerScript.SetMessage("OnPointerExit");
                     _gazedAtObject?.SendMessage("OnPointerExit");
+
                     _gazedAtObject = hit.transform.gameObject;
                     _gazedAtObject.SendMessage("OnPointerEnter");
+                    loggerScript.SetMessage("OnPointerEnter:" + _gazedAtObject.name);
 
                     if( _gazedAtObject.tag != "Environment")
                     {
@@ -48,7 +57,8 @@ public class CameraPointerController : NetworkBehaviour
             else
             {
                 // No GameObject detected in front of the camera.
-                _gazedAtObject?.SendMessage("OnPointerExit");
+                _gazedAtObject.SendMessage("OnPointerExit");
+                loggerScript.SetMessage("OnPointerExit");
                 _gazedAtObject = null;
 
                 hasPointerEntered = false;
@@ -63,7 +73,8 @@ public class CameraPointerController : NetworkBehaviour
 
                 if (onPointerEnterCounter >= onPointerClickTime)
                 {
-                    _gazedAtObject?.SendMessage("OnPointerClick");
+                    loggerScript.SetMessage("OnPointerClick");
+                    cameraPointerController.handlePointerClick(_gazedAtObject);
 
                     Loader.SetActive(false);
                     SliderObject.value = 0f;
@@ -82,7 +93,7 @@ public class CameraPointerController : NetworkBehaviour
         return onPointerEnterCounter;
     }
 
-    public void handlePointerClick(Renderer target)
+    public void handlePointerClick(GameObject target)
     {
         if (target.tag == "Teleportable") {
             Debug.Log("handlePointerClick: " + target.tag);
