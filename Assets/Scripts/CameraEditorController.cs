@@ -1,8 +1,9 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraEditorController : MonoBehaviour
+public class CameraEditorController : NetworkBehaviour
 {
     public float sensitivity = 5f;
     private float mouseX = 0.0f, mouseY = 0.0f;
@@ -21,8 +22,11 @@ public class CameraEditorController : MonoBehaviour
 
     void Update()
     {
-        mouseX += Input.GetAxis("Mouse X") * sensitivity;
-        mouseY -= Input.GetAxis("Mouse Y") * sensitivity;
-        transform.eulerAngles = new Vector3(mouseY, mouseX, 0);
+        if (isLocalPlayer)
+        {
+            mouseX += Input.GetAxis("Mouse X") * sensitivity;
+            mouseY -= Input.GetAxis("Mouse Y") * sensitivity;
+            transform.eulerAngles = new Vector3(mouseY, mouseX, 0);
+        }
     }
 }

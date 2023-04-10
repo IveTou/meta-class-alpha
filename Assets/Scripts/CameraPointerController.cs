@@ -16,6 +16,7 @@ public class CameraPointerController : NetworkBehaviour
     private CameraPointerController cameraPointerController;
     private Camera camera;
     private Slider SliderObject;
+    private string[] interactiveTags = {"Interactive", "Teleportable", "Player"};
     public GameObject Loader;
 
     public override void OnStartClient()
@@ -43,8 +44,9 @@ public class CameraPointerController : NetworkBehaviour
         {
             return;
         }
-            // Casts ray towards camera's forward direction, to detect if a GameObject is being gazed
-            // at.
+        
+        // Casts ray towards camera's forward direction, to detect if a GameObject is being gazed
+        // at.
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, _maxDistance))
         {            
@@ -53,10 +55,10 @@ public class CameraPointerController : NetworkBehaviour
             {
                 // New GameObject.
                 loggerScript.SetMessage("");
-                _gazedAtObject?.SendMessage("OnPointerExit");
+                sendMessage(_gazedAtObject, "OnPointerExit");
 
                 _gazedAtObject = hit.transform.gameObject;
-                _gazedAtObject.SendMessage("OnPointerEnter");
+                sendMessage(_gazedAtObject, "OnPointerEnter");
                 loggerScript.SetMessage("OnPointerEnter:" + _gazedAtObject.name);
 
                 if( _gazedAtObject.tag != "Environment")
@@ -70,7 +72,7 @@ public class CameraPointerController : NetworkBehaviour
         else
         {
             // No GameObject detected in front of the camera.
-            _gazedAtObject.SendMessage("OnPointerExit");
+            sendMessage(_gazedAtObject, "OnPointerExit");
             loggerScript.SetMessage("OnPointerExit");
             _gazedAtObject = null;
 
@@ -110,6 +112,14 @@ public class CameraPointerController : NetworkBehaviour
         if (target.tag == "Teleportable") {
             Debug.Log("handlePointerClick: " + target.tag);
             transform.position = target.transform.position;
+        }
+    }
+
+    public void sendMessage(GameObject target, string message)
+    {
+        if (target && System.Array.IndexOf(interactiveTags, target.tag) >= 0)
+        {
+            target.SendMessage(message);
         }
     }
 }
