@@ -320,6 +320,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Treasure
       objectReference: {fileID: 0}
+    - target: {fileID: 930735927599113455, guid: dc0aa0ca03f2bc8ce8e6bb372effbd45, type: 3}
+      propertyPath: m_TagString
+      value: Interactive
+      objectReference: {fileID: 0}
     - target: {fileID: 4187633869316877451, guid: dc0aa0ca03f2bc8ce8e6bb372effbd45, type: 3}
       propertyPath: sceneId
       value: 3009294789

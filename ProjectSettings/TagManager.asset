@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Environment
   - Teleportable
+  - Interactive
   layers:
   - Default
   - TransparentFX
