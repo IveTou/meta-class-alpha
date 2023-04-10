@@ -1,8 +1,9 @@
+using Mirror;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CameraPointerController : MonoBehaviour
+public class CameraPointerController : NetworkBehaviour
 {
     private const float _maxDistance = 10;
     private GameObject _gazedAtObject = null;
@@ -11,11 +12,39 @@ public class CameraPointerController : MonoBehaviour
     private float onPointerEnterCounter = 0f;
     public float onPointerClickTime = 3f;
 
-    public GameObject loader;
-    public Slider slider;
+    private UILogger loggerScript;
+    private CameraPointerController cameraPointerController;
+    private Camera camera;
+    private Slider SliderObject;
+    private string[] interactiveTags = {"Interactive", "Teleportable", "Player"};
+    public GameObject Loader;
+
+    public override void OnStartClient()
+    {
+        SliderObject = Loader.GetComponentInChildren<Slider>();
+        transform.position = new Vector3(Random.Range(0f, 3f), 1, Random.Range(0f, 3f));
+
+        cameraPointerController = this.GetComponentInChildren<CameraPointerController>();
+        loggerScript = this.GetComponentInChildren<UILogger>();
+
+        if (isLocalPlayer)
+        {
+            Camera camera = cameraPointerController.GetComponent<Camera>();
+            Canvas canvas = this.GetComponentInChildren<Canvas>();
+            camera.enabled = true;
+            canvas.enabled = true;
+            return;
+        }
+
+    }
 
     public void Update()
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        
         // Casts ray towards camera's forward direction, to detect if a GameObject is being gazed
         // at.
         RaycastHit hit;
@@ -25,9 +54,12 @@ public class CameraPointerController : MonoBehaviour
             if (_gazedAtObject != hit.transform.gameObject)
             {
                 // New GameObject.
-                _gazedAtObject?.SendMessage("OnPointerExit");
+                loggerScript.SetMessage("");
+                sendMessage(_gazedAtObject, "OnPointerExit");
+
                 _gazedAtObject = hit.transform.gameObject;
-                _gazedAtObject.SendMessage("OnPointerEnter");
+                sendMessage(_gazedAtObject, "OnPointerEnter");
+                loggerScript.SetMessage("OnPointerEnter:" + _gazedAtObject.name);
 
                 if( _gazedAtObject.tag != "Environment")
                 {
@@ -40,7 +72,8 @@ public class CameraPointerController : MonoBehaviour
         else
         {
             // No GameObject detected in front of the camera.
-            _gazedAtObject?.SendMessage("OnPointerExit");
+            sendMessage(_gazedAtObject, "OnPointerExit");
+            loggerScript.SetMessage("OnPointerExit");
             _gazedAtObject = null;
 
             hasPointerEntered = false;
@@ -50,21 +83,22 @@ public class CameraPointerController : MonoBehaviour
         {
             onPointerEnterCounter += Time.deltaTime;
 
-            loader.SetActive(true);
-            slider.value = onPointerEnterCounter / onPointerClickTime;
+            Loader.SetActive(true);
+            SliderObject.value = onPointerEnterCounter / onPointerClickTime;
 
             if (onPointerEnterCounter >= onPointerClickTime)
             {
-                _gazedAtObject?.SendMessage("OnPointerClick");
+                loggerScript.SetMessage("OnPointerClick");
+                cameraPointerController.handlePointerClick(_gazedAtObject);
 
-                loader.SetActive(false);
-                slider.value = 0f;
+                Loader.SetActive(false);
+                SliderObject.value = 0f;
             }
         } else {
             onPointerEnterCounter = 0;
 
-            loader.SetActive(false);
-            slider.value = 0f;
+            Loader.SetActive(false);
+            SliderObject.value = 0f;
         }
     }
 
@@ -73,11 +107,19 @@ public class CameraPointerController : MonoBehaviour
         return onPointerEnterCounter;
     }
 
-    public void handlePointerClick(Renderer target)
+    public void handlePointerClick(GameObject target)
     {
         if (target.tag == "Teleportable") {
             Debug.Log("handlePointerClick: " + target.tag);
             transform.position = target.transform.position;
+        }
+    }
+
+    public void sendMessage(GameObject target, string message)
+    {
+        if (target && System.Array.IndexOf(interactiveTags, target.tag) >= 0)
+        {
+            target.SendMessage(message);
         }
     }
 }
