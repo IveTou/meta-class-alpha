@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 503613785}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -363,8 +363,9 @@ GameObject:
   m_Component:
   - component: {fileID: 503613786}
   - component: {fileID: 503613785}
+  - component: {fileID: 503613787}
   m_Layer: 0
-  m_Name: Point light
+  m_Name: Sun Light
   m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -379,9 +380,9 @@ Light:
   m_GameObject: {fileID: 503613784}
   m_Enabled: 1
   serializedVersion: 12
-  m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 10
+  m_Type: 1
+  m_Color: {r: 1, g: 0.96, b: 0.84, a: 1}
+  m_Intensity: 1.2
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.802082
@@ -424,8 +425,8 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
+  m_ColorTemperature: 5778
+  m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -450,6 +451,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 727013790}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &503613787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503613784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e4a1b92f3d548e9a0b6c2d8e1f4a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sunTransform: {fileID: 0}
+  lightTarget: {fileID: 0}
+  sunLight: {fileID: 503613785}
+  sunObjectNames:
+  - Sun
+  - SUN
+  - Sphere.009
 --- !u!1 &601615645
 GameObject:
   m_ObjectHideFlags: 0
