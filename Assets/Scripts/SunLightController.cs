@@ -4,9 +4,10 @@ using UnityEngine;
 public class SunLightController : MonoBehaviour
 {
     [SerializeField] Transform sunTransform;
-    [SerializeField] Transform lightTarget;
     [SerializeField] Light sunLight;
-    [SerializeField] string[] sunObjectNames = { "Sun", "SUN", "Sphere.009" };
+    [SerializeField] string[] sunObjectNames = { "Sun Sphere", "Sun", "SUN" };
+    [SerializeField] float lightRange = 2500f;
+    [SerializeField] float lightIntensity = 4f;
 
     void Reset()
     {
@@ -32,11 +33,6 @@ public class SunLightController : MonoBehaviour
             return;
 
         transform.position = sun.position;
-
-        Vector3 targetPoint = ResolveTargetPoint(sun);
-        Vector3 direction = targetPoint - sun.position;
-        if (direction.sqrMagnitude > 0.001f)
-            transform.rotation = Quaternion.LookRotation(direction);
     }
 
     void ConfigureSunLight()
@@ -44,9 +40,10 @@ public class SunLightController : MonoBehaviour
         if (sunLight == null)
             return;
 
-        sunLight.type = LightType.Directional;
+        sunLight.type = LightType.Point;
         sunLight.color = new Color(1f, 0.96f, 0.84f);
-        sunLight.intensity = 1.2f;
+        sunLight.intensity = lightIntensity;
+        sunLight.range = lightRange;
         sunLight.useColorTemperature = true;
         sunLight.colorTemperature = 5778f;
     }
@@ -77,25 +74,5 @@ public class SunLightController : MonoBehaviour
         }
 
         return solarSystem.transform;
-    }
-
-    Vector3 ResolveTargetPoint(Transform sun)
-    {
-        if (lightTarget != null)
-            return lightTarget.position;
-
-        GameObject solarSystem = GameObject.Find("SolarSystem");
-        if (solarSystem != null)
-        {
-            Transform mercury = solarSystem.transform.Find("MERCURY");
-            if (mercury != null)
-                return mercury.position;
-
-            Transform earth = solarSystem.transform.Find("EARTH");
-            if (earth != null)
-                return earth.position;
-        }
-
-        return sun.position + Vector3.forward * 10f;
     }
 }
