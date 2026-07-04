@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: b4f2c8e91a3d6470b8e5f1c2d9a0e3b7, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d3b1f5da039064da26d10bee13b8f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starsSkyboxMaterial: {fileID: 2100000, guid: b4f2c8e91a3d6470b8e5f1c2d9a0e3b7, type: 2}
 --- !u!4 &165207988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a971f90571437f79b946524561c86dab, type: 3}

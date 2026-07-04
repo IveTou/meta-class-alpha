@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class InitCardboard : MonoBehaviour
 {
+    public Material starsSkyboxMaterial;
+
     public void Start()
     {
+        ApplyStarsBackground();
+
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Screen.brightness = 1.0f;
 
@@ -40,5 +44,18 @@ public class InitCardboard : MonoBehaviour
         #if !UNITY_EDITOR
             Api.UpdateScreenParams();
         #endif
+    }
+
+    void ApplyStarsBackground()
+    {
+        if (starsSkyboxMaterial != null)
+            RenderSettings.skybox = starsSkyboxMaterial;
+
+        Camera[] cameras = FindObjectsByType<Camera>(FindObjectsSortMode.None);
+        foreach (Camera camera in cameras)
+        {
+            if (camera.clearFlags == CameraClearFlags.SolidColor)
+                camera.clearFlags = CameraClearFlags.Skybox;
+        }
     }
 }
