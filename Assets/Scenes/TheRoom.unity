@@ -514,7 +514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &205100932
 Transform:
   m_ObjectHideFlags: 0
@@ -877,13 +877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d7c9e1f4b2586d0e2a4c8b5f1d9e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SolarSystemPortalAligner
-  solarSystemRoot: {fileID: 0}
-  portalChildName: Portal
-  sunNames:
-  - SUN
-  - Sun
-  - Sun Sphere
-  - Sphere.009
 --- !u!4 &1149447815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4158388999514845618, guid: a971f90571437f79b946524561c86dab, type: 3}
