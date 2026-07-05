@@ -116,8 +116,61 @@ public class CameraPointerController : NetworkBehaviour
         if (target.tag == "Teleportable")
         {
             Debug.Log("handlePointerClick: " + target.tag);
-            transform.position = target.transform.position;
+            transform.position = GetTargetEdgePosition(target);
         }
+    }
+
+    Vector3 GetTargetEdgePosition(GameObject target)
+    {
+        if (!TryGetTargetBounds(target, out Bounds bounds))
+            return target.transform.position;
+
+        Vector3 center = bounds.center;
+        Vector3 direction = transform.position - center;
+        if (direction.sqrMagnitude < 0.0001f)
+            direction = -transform.forward;
+        else
+            direction.Normalize();
+
+        const float margin = 0.05f;
+        return GetBoundsSurfacePoint(bounds, direction) + direction * margin;
+    }
+
+    static bool TryGetTargetBounds(GameObject target, out Bounds bounds)
+    {
+        bounds = default;
+        Renderer[] renderers = target.GetComponentsInChildren<Renderer>();
+        if (renderers.Length > 0)
+        {
+            bounds = renderers[0].bounds;
+            for (int i = 1; i < renderers.Length; i++)
+                bounds.Encapsulate(renderers[i].bounds);
+            return true;
+        }
+
+        Collider[] colliders = target.GetComponentsInChildren<Collider>();
+        if (colliders.Length == 0)
+            return false;
+
+        bounds = colliders[0].bounds;
+        for (int i = 1; i < colliders.Length; i++)
+            bounds.Encapsulate(colliders[i].bounds);
+        return true;
+    }
+
+    static Vector3 GetBoundsSurfacePoint(Bounds bounds, Vector3 direction)
+    {
+        Vector3 extents = bounds.extents;
+        float distance = float.PositiveInfinity;
+
+        for (int i = 0; i < 3; i++)
+        {
+            float component = Mathf.Abs(direction[i]);
+            if (component > 0.0001f)
+                distance = Mathf.Min(distance, extents[i] / component);
+        }
+
+        return bounds.center + direction * distance;
     }
 
     public void sendMessage(GameObject target, string message)
