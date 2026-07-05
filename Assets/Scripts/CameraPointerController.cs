@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CameraPointerController : NetworkBehaviour
 {
-    private const float _maxDistance = 10;
+    private const float _maxDistance = float.PositiveInfinity;
     private GameObject _gazedAtObject = null;
 
     private bool hasPointerEntered = false;
@@ -16,7 +16,7 @@ public class CameraPointerController : NetworkBehaviour
     private CameraPointerController cameraPointerController;
     private Camera camera;
     private Slider SliderObject;
-    private string[] interactiveTags = {"Interactive", "Teleportable", "Player"};
+    private string[] interactiveTags = { "Interactive", "Teleportable", "Player" };
     public GameObject Loader;
 
     public override void OnStartClient()
@@ -44,12 +44,12 @@ public class CameraPointerController : NetworkBehaviour
         {
             return;
         }
-        
+
         // Casts ray towards camera's forward direction, to detect if a GameObject is being gazed
         // at.
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, _maxDistance))
-        {            
+        {
             // GameObject detected in front of the camera.
             if (_gazedAtObject != hit.transform.gameObject)
             {
@@ -61,10 +61,12 @@ public class CameraPointerController : NetworkBehaviour
                 sendMessage(_gazedAtObject, "OnPointerEnter");
                 loggerScript.SetMessage("OnPointerEnter:" + _gazedAtObject.name);
 
-                if( _gazedAtObject.tag != "Environment")
+                if (_gazedAtObject.tag != "Environment")
                 {
                     hasPointerEntered = true;
-                } else {
+                }
+                else
+                {
                     hasPointerEntered = false;
                 }
             }
@@ -94,7 +96,9 @@ public class CameraPointerController : NetworkBehaviour
                 Loader.SetActive(false);
                 SliderObject.value = 0f;
             }
-        } else {
+        }
+        else
+        {
             onPointerEnterCounter = 0;
 
             Loader.SetActive(false);
@@ -109,7 +113,8 @@ public class CameraPointerController : NetworkBehaviour
 
     public void handlePointerClick(GameObject target)
     {
-        if (target.tag == "Teleportable") {
+        if (target.tag == "Teleportable")
+        {
             Debug.Log("handlePointerClick: " + target.tag);
             transform.position = target.transform.position;
         }
