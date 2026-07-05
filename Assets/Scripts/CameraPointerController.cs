@@ -50,25 +50,31 @@ public class CameraPointerController : NetworkBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, _maxDistance))
         {
-            // GameObject detected in front of the camera.
-            if (_gazedAtObject != hit.transform.gameObject)
+            GameObject hitObject = hit.transform.gameObject;
+            bool isTeleportable = IsTeleportable(hitObject);
+            bool atTargetEdge = isTeleportable && IsObserverAtTargetEdge(hitObject);
+
+            if (_gazedAtObject != hitObject)
             {
-                // New GameObject.
                 loggerScript.SetMessage("");
                 sendMessage(_gazedAtObject, "OnPointerExit");
 
-                _gazedAtObject = hit.transform.gameObject;
-                sendMessage(_gazedAtObject, "OnPointerEnter");
-                loggerScript.SetMessage("OnPointerEnter:" + _gazedAtObject.name);
+                _gazedAtObject = hitObject;
 
-                if (_gazedAtObject.tag != "Environment")
+                if (_gazedAtObject.tag != "Environment" && !(isTeleportable && atTargetEdge))
                 {
+                    sendMessage(_gazedAtObject, "OnPointerEnter");
+                    loggerScript.SetMessage("OnPointerEnter:" + _gazedAtObject.name);
                     hasPointerEntered = true;
                 }
                 else
                 {
                     hasPointerEntered = false;
                 }
+            }
+            else if (isTeleportable && atTargetEdge)
+            {
+                hasPointerEntered = false;
             }
         }
         else
@@ -113,16 +119,33 @@ public class CameraPointerController : NetworkBehaviour
 
     public void handlePointerClick(GameObject target)
     {
-        if (target.tag == "Teleportable")
+        if (IsTeleportable(target))
         {
             Debug.Log("handlePointerClick: " + target.tag);
             transform.position = GetTargetEdgePosition(target);
+            hasPointerEntered = false;
+            onPointerEnterCounter = 0f;
         }
+    }
+
+    static bool IsTeleportable(GameObject target)
+    {
+        return target != null && target.CompareTag("Teleportable");
+    }
+
+    bool IsObserverAtTargetEdge(GameObject target)
+    {
+        if (!IsTeleportable(target) || !TryGetTargetBounds(target, out Bounds bounds))
+            return false;
+
+        Vector3 edgePosition = GetTargetEdgePosition(target);
+        float tolerance = Mathf.Max(0.1f, bounds.extents.magnitude * 0.02f);
+        return (transform.position - edgePosition).sqrMagnitude <= tolerance * tolerance;
     }
 
     Vector3 GetTargetEdgePosition(GameObject target)
     {
-        if (!TryGetTargetBounds(target, out Bounds bounds))
+        if (!IsTeleportable(target) || !TryGetTargetBounds(target, out Bounds bounds))
             return target.transform.position;
 
         Vector3 center = bounds.center;
