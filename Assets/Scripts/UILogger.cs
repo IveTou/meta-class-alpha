@@ -4,7 +4,7 @@ using TMPro;
 public class UILogger : MonoBehaviour
 {
     public TextMeshProUGUI LogUI;
-    private string incomingMessage = "Hello";
+    private string incomingMessage = "";
 
     void Update()
     {

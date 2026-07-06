@@ -69,7 +69,7 @@ public class CameraPointerController : NetworkBehaviour
                 if (_gazedAtObject.tag != "Environment" && !pointerDisabled && !(isTeleportable && atTargetEdge))
                 {
                     sendMessage(_gazedAtObject, "OnPointerEnter");
-                    loggerScript.SetMessage("Planeta: " + _gazedAtObject.name);
+                    loggerScript.SetMessage(GetPointerLogName(_gazedAtObject));
                     hasPointerEntered = true;
                 }
                 else
@@ -80,11 +80,13 @@ public class CameraPointerController : NetworkBehaviour
             else if (pointerDisabled || (isTeleportable && atTargetEdge))
             {
                 hasPointerEntered = false;
+                loggerScript.SetMessage("");
             }
         }
         else
         {
             // No GameObject detected in front of the camera.
+            loggerScript.SetMessage("");
             sendMessage(_gazedAtObject, "OnPointerExit");
             _gazedAtObject = null;
             _pointerDisabledTarget = null;
@@ -101,8 +103,13 @@ public class CameraPointerController : NetworkBehaviour
 
             if (onPointerEnterCounter >= onPointerClickTime)
             {
-                loggerScript.SetMessage("Clique em: " + _gazedAtObject.name);
-                cameraPointerController.handlePointerClick(_gazedAtObject);
+                GameObject target = _gazedAtObject;
+                cameraPointerController.handlePointerClick(target);
+
+                if (!IsTeleportable(target))
+                    loggerScript.SetMessage("Clique em: " + target.name);
+                else
+                    loggerScript.SetMessage("");
 
                 Loader.SetActive(false);
                 SliderObject.value = 0f;
@@ -135,6 +142,7 @@ public class CameraPointerController : NetworkBehaviour
     void DisablePointerForTarget(GameObject target)
     {
         sendMessage(target, "OnPointerExit");
+        loggerScript.SetMessage("");
         hasPointerEntered = false;
         onPointerEnterCounter = 0f;
         _pointerDisabledTarget = target;
@@ -143,6 +151,18 @@ public class CameraPointerController : NetworkBehaviour
     bool IsPointerDisabledFor(GameObject target)
     {
         return target != null && target == _pointerDisabledTarget;
+    }
+
+    static string GetPointerLogName(GameObject target)
+    {
+        if (target == null)
+            return "";
+
+        Transform parent = target.transform.parent;
+        if (parent != null && parent.CompareTag("Planet"))
+            return "Planeta: " + parent.name;
+
+        return target.name;
     }
 
     static bool IsTeleportable(GameObject target)

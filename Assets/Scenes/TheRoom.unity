@@ -1061,21 +1061,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mercury
       objectReference: {fileID: 0}
+    - target: {fileID: -7584595295812877294, guid: a971f90571437f79b946524561c86dab, type: 3}
+      propertyPath: m_TagString
+      value: Planet
+      objectReference: {fileID: 0}
     - target: {fileID: -5832451699457583118, guid: a971f90571437f79b946524561c86dab, type: 3}
       propertyPath: m_Name
       value: Uranus
+      objectReference: {fileID: 0}
+    - target: {fileID: -5832451699457583118, guid: a971f90571437f79b946524561c86dab, type: 3}
+      propertyPath: m_TagString
+      value: Planet
       objectReference: {fileID: 0}
     - target: {fileID: -3423068814212244824, guid: a971f90571437f79b946524561c86dab, type: 3}
       propertyPath: m_Name
       value: Neptune
       objectReference: {fileID: 0}
+    - target: {fileID: -3423068814212244824, guid: a971f90571437f79b946524561c86dab, type: 3}
+      propertyPath: m_TagString
+      value: Planet
+      objectReference: {fileID: 0}
     - target: {fileID: -2549992049239406492, guid: a971f90571437f79b946524561c86dab, type: 3}
       propertyPath: m_Name
       value: Earth
       objectReference: {fileID: 0}
+    - target: {fileID: -2549992049239406492, guid: a971f90571437f79b946524561c86dab, type: 3}
+      propertyPath: m_TagString
+      value: Planet
+      objectReference: {fileID: 0}
     - target: {fileID: -1975075961443923333, guid: a971f90571437f79b946524561c86dab, type: 3}
       propertyPath: m_Name
       value: Saturn
+      objectReference: {fileID: 0}
+    - target: {fileID: -1975075961443923333, guid: a971f90571437f79b946524561c86dab, type: 3}
+      propertyPath: m_TagString
+      value: Planet
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a971f90571437f79b946524561c86dab, type: 3}
       propertyPath: m_Name
@@ -1085,13 +1105,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jupter
       objectReference: {fileID: 0}
+    - target: {fileID: 3797758464525749260, guid: a971f90571437f79b946524561c86dab, type: 3}
+      propertyPath: m_TagString
+      value: Planet
+      objectReference: {fileID: 0}
     - target: {fileID: 5672928278556802053, guid: a971f90571437f79b946524561c86dab, type: 3}
       propertyPath: m_Name
       value: Venus
       objectReference: {fileID: 0}
+    - target: {fileID: 5672928278556802053, guid: a971f90571437f79b946524561c86dab, type: 3}
+      propertyPath: m_TagString
+      value: Planet
+      objectReference: {fileID: 0}
     - target: {fileID: 8486352252047009272, guid: a971f90571437f79b946524561c86dab, type: 3}
       propertyPath: m_Name
       value: Mars
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486352252047009272, guid: a971f90571437f79b946524561c86dab, type: 3}
+      propertyPath: m_TagString
+      value: Planet
       objectReference: {fileID: 0}
     - target: {fileID: 8826561739044661530, guid: a971f90571437f79b946524561c86dab, type: 3}
       propertyPath: m_LocalPosition.x
