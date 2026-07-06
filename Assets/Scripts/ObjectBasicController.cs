@@ -1,9 +1,6 @@
-using Mirror;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
-public class ObjectBasicController : NetworkBehaviour
+public class ObjectBasicController : MonoBehaviour
 {
     public Material InactiveMaterial;
     public Material GazedAtMaterial;
@@ -19,9 +16,10 @@ public class ObjectBasicController : NetworkBehaviour
     private Renderer _myRenderer;
     private Vector3 _startingPosition;
 
-    public override void OnStartClient()
+    void Start()
     {
-       _startingPosition = transform.parent.localPosition;
+        if (transform.parent != null)
+            _startingPosition = transform.parent.localPosition;
         _myRenderer = GetComponent<Renderer>();
         SetMaterial(false);
     }
