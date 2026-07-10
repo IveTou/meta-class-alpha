@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Black Rocket
+  companyName: EbonLabs
   productName: Meta Class
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -166,7 +166,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Android: com.BlackRocket.metaclassalpha
+    Android: com.EbonLabs.metaclassalpha
   buildNumber:
     Standalone: 0
     VisionOS: 0

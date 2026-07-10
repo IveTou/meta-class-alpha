@@ -188,7 +188,7 @@ Current extensions: C#, Unity Tools, Unity Debug, DocComment.
 
 | Field | Value |
 |-------|-------|
-| Package Name | `com.BlackRocket.metaclassalpha` |
+| Package Name | `com.EbonLabs.metaclassalpha` |
 | Version | `0.1` (versionCode: 1) |
 | Min API Level | 25 |
 | Scripting Backend | IL2CPP |
@@ -203,6 +203,6 @@ Current extensions: C#, Unity Tools, Unity Debug, DocComment.
 
 ## License and credits
 
-- **Company:** Black Rocket
+- **Company:** EbonLabs
 - **Product:** meta-class-alpha
 - Third-party libraries: Mirror, Google Cardboard XR, ParrelSync, TextMesh Pro

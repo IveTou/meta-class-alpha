@@ -10,7 +10,7 @@ Guide to build an APK of **meta-class-alpha** for testing on a Google Cardboard 
 |------|-------|
 | Unity | 6000.3.6f1 (Unity 6.3) |
 | Build scene | `Assets/Scenes/TheRoom.unity` |
-| Package Name | `com.BlackRocket.metaclassalpha` |
+| Package Name | `com.EbonLabs.metaclassalpha` |
 | Version | 0.1 (versionCode: 1) |
 | Min API Level | 25 (Android 7.1) |
 | Scripting Backend | IL2CPP |
@@ -35,7 +35,7 @@ If anything is missing, Unity usually prompts to install it when switching the p
 3. Select **Android** and click **Switch Platform** (wait for reimport).
 4. Confirm that `Assets/Scenes/TheRoom.unity` is included in the build.
 5. Review **Edit → Project Settings → Player → Android**:
-   - **Package Name**: `com.BlackRocket.metaclassalpha`
+   - **Package Name**: `com.EbonLabs.metaclassalpha`
    - **Minimum API Level**: 25
    - **Scripting Backend**: IL2CPP
    - **Target Architectures**: ARMv7 and ARM64

@@ -10,7 +10,7 @@ Guia para gerar um APK do **meta-class-alpha** para testes em dispositivo com Go
 |------|-------|
 | Unity | 6000.3.6f1 (Unity 6.3) |
 | Cena de build | `Assets/Scenes/TheRoom.unity` |
-| Package Name | `com.BlackRocket.metaclassalpha` |
+| Package Name | `com.EbonLabs.metaclassalpha` |
 | Versão | 0.1 (versionCode: 1) |
 | Min API Level | 25 (Android 7.1) |
 | Scripting Backend | IL2CPP |
@@ -35,7 +35,7 @@ Se algo estiver faltando, o Unity costuma solicitar a instalação ao trocar a p
 3. Selecione **Android** e clique em **Switch Platform** (aguarde a reimportação).
 4. Confirme que a cena `Assets/Scenes/TheRoom.unity` está incluída no build.
 5. Revise **Edit → Project Settings → Player → Android**:
-   - **Package Name**: `com.BlackRocket.metaclassalpha`
+   - **Package Name**: `com.EbonLabs.metaclassalpha`
    - **Minimum API Level**: 25
    - **Scripting Backend**: IL2CPP
    - **Target Architectures**: ARMv7 e ARM64
